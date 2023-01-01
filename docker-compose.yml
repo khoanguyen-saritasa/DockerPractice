@@ -1,0 +1,19 @@
+# Specify version of Docker.
+version: "3"
+
+# Add services
+services:
+  # App service.
+  app: 
+    # Change mode to host in order to fix error "Failed to connect to localhost port 80: Connection refused"
+    # More info: https://stackoverflow.com/questions/54998680/docker-failed-to-connect-to-localhost-port-80-connection-refused
+    network_mode: "host"
+    # Build from root folder
+    build: 
+      context: .
+      dockerfile: Dockerfile
+    # Map ports to 8000
+    ports:
+      - 8000:8000
+    # Restart when Docker is stopped.
+    restart: unless-stopped
