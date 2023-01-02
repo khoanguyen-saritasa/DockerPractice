@@ -1,4 +1,4 @@
-# Docker on NodeJS project
+# Exercise 1:  Simple backend into Docker
 
 ## Prerequisite
 - To run this app on your local computer, it is required to install Docker and Docker compose.
