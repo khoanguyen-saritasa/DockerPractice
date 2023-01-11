@@ -11,7 +11,7 @@
 - With this option, we just simply need to add this command to the terminal `docker compose up -d`.
 
 ### Option 2: Using Docker run.
-- With this option, we will add this command to the terminal `docker build -t node-js-demo .` and then run `docker run -dp 8000:8000 --net=host node-js-demo`
+- With this option, we will add this command to the terminal `docker build -t node-js-demo .` and then run `docker run -dp 8000:8000 node-js-demo`
 
 ## Port
 After finishing building the image and container, the application will run on `localhost:8000`.

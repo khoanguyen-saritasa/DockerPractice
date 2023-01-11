@@ -1,7 +1,6 @@
 const http = require("http");
-const host = "localhost";
+const host = "0.0.0.0";
 const port = 8000;
-const fs = require("fs").promises;
 
 const books = JSON.stringify([
   { title: "The Alchemist", author: "Paulo Coelho", year: 1988 },
