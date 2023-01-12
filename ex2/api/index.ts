@@ -1,27 +1,36 @@
-import cors from 'cors';
+import cors from "cors";
 import dotenv from "dotenv";
 import express, { Express } from "express";
 import { buildAuthorizationAPI } from "./src/apis/authorization";
-import { buildTestAuthAPI } from "./src/apis/tests";
+import { buildPostAPI } from "./src/apis/post";
+import { PORT } from "./src/configs/configs";
+import { client } from "./src/db/db";
 
+// Config env.
 dotenv.config();
 
 const app: Express = express();
-const port = process.env.PORT || 8000;
 
-/** Body parser. */
+// Connect to pg client.
+client.connect();
+
+// Body parser.
 app.use(express.json());
 app.use(express.urlencoded({ extended: true }));
-app.use(cors({
-  // Support all requested headers.
-  origin: "*",
-  methods: ['GET','POST','DELETE','UPDATE','PUT','PATCH']
-}));
+
+// Config CORS.
+app.use(
+  cors({
+    // Support all requested headers.
+    origin: "*",
+    methods: ["GET", "POST", "DELETE", "UPDATE", "PUT", "PATCH"],
+  })
+);
 
 /** Build APIs. */
 buildAuthorizationAPI(app);
-buildTestAuthAPI(app);
+buildPostAPI(app);
 
-app.listen(port, () => {
-  console.log(`⚡️[server]: Server is running at http://localhost:${port}`);
+app.listen(PORT, () => {
+  console.log(`⚡️[server]: Server is running at http://localhost:${PORT}`);
 });
