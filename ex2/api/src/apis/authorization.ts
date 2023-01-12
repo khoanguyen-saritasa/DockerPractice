@@ -6,11 +6,11 @@ import { User } from "../models/user";
 
 const users: readonly User[] = [
   {
-    username: "khoanguyen",
+    email: "khoanguyen",
     id: 1,
   },
   {
-    username: "test",
+    email: "test",
     id: 2,
   },
 ];
@@ -20,8 +20,8 @@ export function buildAuthorizationAPI(app: Express): void {
     if (req.body == null) {
       return res.sendStatus(400);
     }
-    const username = req.body.username;
-    const user = users.find((user) => user.username === username);
+    const email = req.body.email;
+    const user = users.find((user) => user.email === email);
     if (user == null) {
       return res.sendStatus(401);
     }
