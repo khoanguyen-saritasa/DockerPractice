@@ -1,3 +1,4 @@
+import cors from 'cors';
 import dotenv from "dotenv";
 import express, { Express } from "express";
 import { buildAuthorizationAPI } from "./src/apis/authorization";
@@ -11,6 +12,11 @@ const port = process.env.PORT || 8000;
 /** Body parser. */
 app.use(express.json());
 app.use(express.urlencoded({ extended: true }));
+app.use(cors({
+  // Support all requested headers;
+  origin: "*",
+  methods: ['GET','POST','DELETE','UPDATE','PUT','PATCH']
+}));
 
 /** Build APIs. */
 buildAuthorizationAPI(app);

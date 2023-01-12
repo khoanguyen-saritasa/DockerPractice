@@ -1,6 +1,5 @@
-import { RequestHandler, Request, Response, NextFunction } from "express";
+import { NextFunction, Request, RequestHandler, Response } from "express";
 import jwt from "jsonwebtoken";
-import { User } from "../models/user";
 
 export function verifyToken(): RequestHandler {
   return (req: Request, res: Response, next: NextFunction) => {
@@ -11,8 +10,7 @@ export function verifyToken(): RequestHandler {
       return;
     }
     try {
-      const asd = jwt.verify(token, "secret-token");
-      console.log(asd)
+      jwt.verify(token, "secret-token");
       next();
     } catch (error: unknown) {
       res.sendStatus(403);
