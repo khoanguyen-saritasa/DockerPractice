@@ -15,10 +15,11 @@ export function buildAuthorizationAPI(app: Express): void {
       return res.sendStatus(401);
     }
     const user = userQuery.rows[0];
+    console.log(user)
     if (user.password !== req.body.password) {
       return res.sendStatus(401).send("Wrong email or password.");
     }
     const accessToken = jwt.sign(userQuery.rows[0], SECRET_TOKEN);
-    return res.sendStatus(200).json({ accessToken });
+    return res.json({ accessToken }).sendStatus(200);
   });
 }
