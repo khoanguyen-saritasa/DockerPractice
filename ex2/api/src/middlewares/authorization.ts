@@ -7,14 +7,14 @@ export function verifyToken(): RequestHandler {
     const authHeader = req.header("Authorization");
     const token = authHeader && authHeader.split(" ")[1];
     if (token == null) {
-      res.sendStatus(401);
+      res.status(401);
       return;
     }
     try {
       jwt.verify(token, SECRET_TOKEN);
       next();
     } catch (error: unknown) {
-      res.sendStatus(403);
+      res.status(403);
     }
   };
 }

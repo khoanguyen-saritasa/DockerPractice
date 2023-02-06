@@ -17,9 +17,9 @@ export function buildAuthorizationAPI(app: Express): void {
     const user = userQuery.rows[0];
     console.log(user)
     if (user.password !== req.body.password) {
-      return res.sendStatus(401).send("Wrong email or password.");
+      return res.status(401).send("Wrong email or password.");
     }
     const accessToken = jwt.sign(userQuery.rows[0], SECRET_TOKEN);
-    return res.json({ accessToken }).sendStatus(200);
+    return res.json({ accessToken }).status(200);
   });
 }
