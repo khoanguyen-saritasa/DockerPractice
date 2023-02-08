@@ -1,37 +1,44 @@
 import { client } from "../db/db-config";
 import { IUser } from "../interfaces/user";
 import { userMapper } from "../mappers/user.mapper";
+import { ResponseError, ResponseErrorType } from "./ResponseError";
 
 export class User implements IUser {
-  private _email: IUser["email"];
-  private _password: IUser["password"];
+  public email: IUser["email"];
+  public password: IUser["password"];
 
   private static FIND_BY_EMAIL_QUERY = "SELECT * FROM users WHERE email = $1";
 
-  public constructor(email: IUser["email"], password: IUser["password"]) {
-    this._email = email;
-    this._password = password;
-  }
-  public get email(): IUser["email"] {
-    return this._email;
-  }
-  public get password(): IUser["password"] {
-    return this._password;
+  public constructor(data: IUser) {
+    this.email = data.email;
+    this.password = data.password;
   }
 
-  public static async findByEmail(
-    userEmail: IUser["email"]
-  ): Promise<User | null> {
+  public static async findUser(userInfo: User): Promise<User | null> {
     try {
       const result = await client.query<User>(this.FIND_BY_EMAIL_QUERY, [
-        userEmail,
+        userInfo.email,
       ]);
       if (result.rows.length === 0) {
         return null;
       }
-      return userMapper.fromDto(result.rows[0]);
+      const user = result.rows[0];
+      if (userInfo.password === user.password) {
+        return userMapper.fromDto(user);
+      }
+      return null;
     } catch (error) {
-      throw new Error(`Cannot find user with email: ${userEmail}`);
+      throw new Error(`Cannot find user with email: ${userInfo.email}`);
     }
+  }
+
+  public static composeUnauthorizedError(): ResponseErrorType {
+    return new ResponseError({ non_field_error: "Unauthorized" }).compose();
+  }
+
+  public static composeInvalidUserError(): ResponseErrorType {
+    return new ResponseError({
+      non_field_error: "Email or password is incorrect",
+    }).compose();
   }
 }

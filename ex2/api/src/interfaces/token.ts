@@ -1,3 +1,3 @@
 export interface IToken {
-  readonly accessToken: string;
+  readonly access_token: string;
 }
