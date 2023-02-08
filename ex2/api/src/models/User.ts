@@ -6,16 +6,19 @@ import { userMapper } from "../mappers/user.mapper";
 import { ResponseError, ResponseErrorType } from "./ResponseError";
 
 export class User implements IUser {
-  public email: IUser["email"];
-  public name: IUser["name"];
-  public id: IUser["id"];
+  public readonly email: IUser["email"];
+  public readonly name: IUser["name"];
+  public readonly id: IUser["id"];
+  public readonly password: IUser["password"];
 
-  private static FIND_BY_EMAIL_QUERY = "SELECT * FROM users WHERE email = $1";
+  private static readonly FIND_BY_EMAIL_QUERY =
+    "SELECT * FROM users WHERE email = $1";
 
   public constructor(data: IUser) {
     this.email = data.email;
     this.name = data.name;
     this.id = data.id;
+    this.password = data.password;
   }
 
   public static async findUserWithLogin(
@@ -40,17 +43,17 @@ export class User implements IUser {
 
   public static async findByEmail(
     email: User["email"]
-  ): Promise<User | null> {
+  ): Promise<Omit<User, "password"> | null> {
     try {
-      const result = await client.query<UserDto>(
-        this.FIND_BY_EMAIL_QUERY,
-        [email]
-      );
+      const result = await client.query<UserDto>(this.FIND_BY_EMAIL_QUERY, [
+        email,
+      ]);
       if (result.rows.length === 0) {
         return null;
       }
       const userDto = result.rows[0];
-      return userMapper.fromDto(userDto);
+      const user = userMapper.fromDto(userDto);
+      return { id: user.id, email: user.email, name: user.name };
     } catch (error) {
       throw new Error(`Cannot find user with email: ${email}`);
     }

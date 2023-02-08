@@ -1,8 +1,8 @@
 export class ResponseError<
   Error extends Readonly<Record<string, any>> | null = null
 > {
-  public data?: Error;
-  public non_field_error?: string;
+  public readonly data?: Error;
+  public readonly non_field_error?: string;
   public constructor(error: { data?: Error; non_field_error?: string }) {
     this.data = error.data;
     this.non_field_error = error.non_field_error;
