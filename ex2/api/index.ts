@@ -1,7 +1,7 @@
 import dotenv from "dotenv";
 import express, { Express } from "express";
 import { buildAuthorizationAPI } from "./src/apis/authorization";
-import { buildPostAPI } from "./src/apis/post";
+import { buildUserAPI } from "./src/apis/user";
 import { PORT } from "./src/configs/configs";
 import { client } from "./src/db/db-config";
 
@@ -19,15 +19,15 @@ app.use(express.urlencoded({ extended: true }));
 
 // Config CORS.
 app.use((_, res, next) => {
-  res.setHeader('Access-Control-Allow-Origin', ['*']);
-  res.setHeader('Access-Control-Allow-Methods', 'GET,PUT,POST,DELETE');
-  res.setHeader('Access-Control-Allow-Headers', 'Content-Type');
+  res.setHeader("Access-Control-Allow-Origin", "*");
+  res.setHeader("Access-Control-Allow-Methods", "GET,PUT,POST,DELETE");
+  res.setHeader("Access-Control-Allow-Headers", "Content-Type, Authorization");
   next();
 });
 
 /** Build APIs. */
 buildAuthorizationAPI(app);
-buildPostAPI(app);
+buildUserAPI(app);
 
 app.listen(PORT, () => {
   console.log(`⚡️[server]: Server is running at http://localhost:${PORT}`);

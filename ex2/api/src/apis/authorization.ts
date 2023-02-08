@@ -13,14 +13,11 @@ export function buildAuthorizationAPI(app: Express): void {
       if (req.body == null) {
         return res.sendStatus(400).send(User.composeUnauthorizedError());
       }
-      const userInfo = await User.findUser(req.body);
+      const userInfo = await User.findUserWithLogin(req.body);
       if (userInfo == null) {
         return res.status(401).send(User.composeInvalidUserError());
       }
-      const accessToken = jwt.sign(
-        { email: userInfo.email, password: userInfo.password },
-        SECRET_TOKEN
-      );
+      const accessToken = jwt.sign({ email: userInfo.email }, SECRET_TOKEN);
       return res.status(200).json({ access_token: accessToken });
     }
   );

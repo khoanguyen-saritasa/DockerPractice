@@ -1,7 +1,6 @@
 import { AxiosRequestConfig } from 'axios';
 import { UserSecret } from 'src/models/user-secret';
 
-import { CONFIG } from '../config';
 import { UserSecretStorageService } from '../services/user-secret-storage';
 
 // TODO (template preparation): Update interceptor according to API specs.
@@ -11,7 +10,7 @@ import { UserSecretStorageService } from '../services/user-secret-storage';
  * @param config - Request config.
  */
 function shouldInterceptSecret(config: AxiosRequestConfig): boolean {
-  return config.baseURL?.startsWith(CONFIG.apiUrl) ?? false;
+  return !config.baseURL?.includes('login') ?? false;
 }
 
 /**
