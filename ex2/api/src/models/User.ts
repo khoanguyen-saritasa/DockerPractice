@@ -12,7 +12,7 @@ export class User implements IUser {
   public readonly password: IUser["password"];
 
   private static readonly FIND_BY_EMAIL_QUERY =
-    'SELECT * FROM "Users" WHERE email = $1';
+    "SELECT * FROM Users WHERE email = $1";
 
   public constructor(data: IUser) {
     this.email = data.email;
@@ -60,12 +60,16 @@ export class User implements IUser {
   }
 
   public static composeUnauthorizedError(): ResponseErrorType {
-    return new ResponseError({ non_field_error: "Unauthorized" }).compose();
+    return new ResponseError({
+      non_field_error: "Unauthorized",
+      detail: "Unauthorized",
+    }).compose();
   }
 
   public static composeInvalidUserError(): ResponseErrorType {
     return new ResponseError({
       non_field_error: "Email or password is incorrect",
+      detail: "Unauthorized",
     }).compose();
   }
 }

@@ -7,7 +7,7 @@ import { User } from "../models/User";
 import { ParamDictionary } from "../utils/types";
 
 export function buildUserAPI(app: Express): void {
-  app.get<ParamDictionary, User | ResponseErrorType, string>(
+  app.get<ParamDictionary, Omit<User, "password"> | ResponseErrorType, string>(
     "/user/",
     verifyToken(),
     async (req, res) => {

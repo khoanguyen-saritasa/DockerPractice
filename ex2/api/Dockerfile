@@ -1,4 +1,4 @@
-FROM node:16-alpine AS backend
+FROM node:19-alpine AS backend
 
 LABEL maintainer="khoanguyen khoanguyen@saritasa.com" \
     version="Beta" \
