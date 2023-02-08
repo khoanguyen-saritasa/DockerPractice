@@ -4,7 +4,7 @@ import express, { Express } from "express";
 import { buildAuthorizationAPI } from "./src/apis/authorization";
 import { buildPostAPI } from "./src/apis/post";
 import { PORT } from "./src/configs/configs";
-import { client } from "./src/db/db";
+import { client } from "./src/db/db-config";
 
 // Config env.
 dotenv.config();

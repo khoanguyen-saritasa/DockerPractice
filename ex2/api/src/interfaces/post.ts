@@ -1,4 +1,4 @@
-export interface Post {
+export interface IPost {
   readonly title: string;
   readonly content: string;
 }

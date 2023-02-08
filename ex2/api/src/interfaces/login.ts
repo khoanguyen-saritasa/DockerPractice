@@ -1,4 +1,4 @@
-export interface Login {
+export interface ILogin {
   readonly email: string;
   readonly password: string;
 }

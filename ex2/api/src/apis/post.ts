@@ -1,9 +1,9 @@
 import { Express } from "express";
 import { verifyToken } from "../middlewares/authorization";
-import { Post } from "../models/post";
+import { IPost } from "../interfaces/post";
 import { ParamDictionary } from "../utils/types";
 
-const posts: Post[] = [
+const posts: IPost[] = [
   {
     title: "Post 1",
     content: "This is post 1.",
@@ -15,7 +15,7 @@ const posts: Post[] = [
 ];
 
 export function buildPostAPI(app: Express): void {
-  app.get<ParamDictionary, Post[], string>("/posts/", verifyToken(), (_, res) => {
-    res.json(posts).sendStatus(200);
+  app.get<ParamDictionary, IPost[], string>("/posts/", verifyToken(), (_, res) => {
+    res.json(posts).status(200);
   });
 }

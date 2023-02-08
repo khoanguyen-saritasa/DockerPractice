@@ -1,25 +1,20 @@
 import { Express } from "express";
 import jwt from "jsonwebtoken";
 import { SECRET_TOKEN } from "../configs/configs";
-import { UserQueries } from "../db/User";
-import { Login } from "../models/login";
-import { Token } from "../models/token";
+import { ILogin } from "../interfaces/login";
+import { IToken } from "../interfaces/token";
+import { User } from "../models/User";
 
 export function buildAuthorizationAPI(app: Express): void {
-  app.post<unknown, Token | string, Login>("/auth/login/", async (req, res) => {
+  app.post<unknown, IToken | string, ILogin>("/auth/login/", async (req, res) => {
     if (req.body == null) {
       return res.sendStatus(400);
     }
-    const userQuery = await UserQueries.getUser(req.body);
-    if (userQuery.rows.length === 0) {
-      return res.sendStatus(401);
-    }
-    const user = userQuery.rows[0];
-    console.log(user)
-    if (user.password !== req.body.password) {
+    const userInfo = await User.findByEmail(req.body.email);
+    if (userInfo == null) {
       return res.status(401).send("Wrong email or password.");
     }
-    const accessToken = jwt.sign(userQuery.rows[0], SECRET_TOKEN);
-    return res.json({ accessToken }).status(200);
+    const accessToken = jwt.sign(userInfo, SECRET_TOKEN);
+    return res.status(200).json({ accessToken });
   });
 }

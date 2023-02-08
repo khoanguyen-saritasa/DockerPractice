@@ -5,16 +5,16 @@ import { SECRET_TOKEN } from "../configs/configs";
 export function verifyToken(): RequestHandler {
   return (req: Request, res: Response, next: NextFunction) => {
     const authHeader = req.header("Authorization");
-    const token = authHeader && authHeader.split(" ")[1];
+    const token = authHeader != null ? authHeader.split(" ")[1] : null;
     if (token == null) {
-      res.status(401);
+      res.sendStatus(401);
       return;
     }
     try {
       jwt.verify(token, SECRET_TOKEN);
       next();
     } catch (error: unknown) {
-      res.status(403);
+      res.sendStatus(403);
     }
   };
 }
