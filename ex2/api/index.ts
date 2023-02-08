@@ -1,4 +1,3 @@
-import cors from "cors";
 import dotenv from "dotenv";
 import express, { Express } from "express";
 import { buildAuthorizationAPI } from "./src/apis/authorization";
@@ -19,13 +18,12 @@ app.use(express.json());
 app.use(express.urlencoded({ extended: true }));
 
 // Config CORS.
-app.use(
-  cors({
-    // Support all requested headers.
-    origin: "*",
-    methods: ["GET", "POST", "DELETE", "UPDATE", "PUT", "PATCH"],
-  })
-);
+app.use((_, res, next) => {
+  res.setHeader('Access-Control-Allow-Origin', ['*']);
+  res.setHeader('Access-Control-Allow-Methods', 'GET,PUT,POST,DELETE');
+  res.setHeader('Access-Control-Allow-Headers', 'Content-Type');
+  next();
+});
 
 /** Build APIs. */
 buildAuthorizationAPI(app);
