@@ -12,7 +12,7 @@ export class User implements IUser {
   public readonly password: IUser["password"];
 
   private static readonly FIND_BY_EMAIL_QUERY =
-    "SELECT * FROM users WHERE email = $1";
+    'SELECT * FROM "Users" WHERE email = $1';
 
   public constructor(data: IUser) {
     this.email = data.email;

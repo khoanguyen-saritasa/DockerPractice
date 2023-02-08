@@ -3,7 +3,7 @@ import express, { Express } from "express";
 import { buildAuthorizationAPI } from "./src/apis/authorization";
 import { buildUserAPI } from "./src/apis/user";
 import { PORT } from "./src/configs/configs";
-import { client } from "./src/db/db-config";
+import { client, connectToDB } from "./src/db/db-config";
 
 // Config env.
 dotenv.config();
@@ -11,7 +11,7 @@ dotenv.config();
 const app: Express = express();
 
 // Connect to pg client.
-client.connect();
+connectToDB();
 
 // Body parser.
 app.use(express.json());
@@ -24,6 +24,7 @@ app.use((_, res, next) => {
   res.setHeader("Access-Control-Allow-Headers", "Content-Type, Authorization");
   next();
 });
+
 
 /** Build APIs. */
 buildAuthorizationAPI(app);
