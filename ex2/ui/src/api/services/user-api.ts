@@ -5,7 +5,7 @@ import { userMapper } from '../mappers/user.mapper';
 
 export namespace UserApi {
 
-  const getCurrentUserUrl = 'user';
+  const getCurrentUserUrl = 'user/';
 
   /** Get current user. */
   export async function getCurrentUser(): Promise<User> {

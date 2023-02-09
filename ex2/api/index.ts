@@ -1,34 +1,63 @@
 import dotenv from "dotenv";
-import express, { Express } from "express";
-import { buildAuthorizationAPI } from "./src/apis/authorization";
-import { buildUserAPI } from "./src/apis/user";
+import { createServer, IncomingMessage, ServerResponse } from "http";
+import { AuthorizationController } from "./src/apis/authorization-controller";
+import { UserController } from "./src/apis/user-controller";
 import { PORT } from "./src/configs/configs";
 import { client } from "./src/db/db-config";
+import { appRoutes } from "./src/routes/routes";
+import { generateError } from "./src/utils/generate-error";
 
 // Config env.
 dotenv.config();
-
-const app: Express = express();
-
-// Connect to pg client.
 client.connect();
 
-// Body parser.
-app.use(express.json());
-app.use(express.urlencoded({ extended: true }));
+async function listenEndpont(
+  req: IncomingMessage,
+  res: ServerResponse,
+  body: any
+) {
+  switch (req.url) {
+    case appRoutes.login:
+      const authorizationController = new AuthorizationController({
+        req,
+        res,
+        body,
+      });
+      await authorizationController.login();
+      break;
+    case appRoutes.profile:
+      const userController = new UserController({ req, res, body });
+      await userController.getProfile();
+      break;
+    default:
+      res
+        .writeHead(404)
+        .end(JSON.stringify(generateError({ detail: "Not found" })));
+      break;
+  }
+}
 
-// Config CORS.
-app.use((_, res, next) => {
+async function requestListener(req: IncomingMessage, res: ServerResponse) {
+  res.setHeader("Content-Type", "application/json");
   res.setHeader("Access-Control-Allow-Origin", "*");
-  res.setHeader("Access-Control-Allow-Methods", "GET,PUT,POST,DELETE");
+  res.setHeader("Access-Control-Allow-Methods", "GET, POST, PUT, DELETE");
   res.setHeader("Access-Control-Allow-Headers", "Content-Type, Authorization");
-  next();
-});
 
-// Build APIs.
-buildAuthorizationAPI(app);
-buildUserAPI(app);
+  const body: Uint8Array[] = [];
+  req
+    .on("error", (err) => {
+      console.error(err);
+    })
+    .on("data", (chunk) => {
+      body.push(chunk);
+    })
+    .on("end", async () => {
+      const _body = Buffer.concat(body).toString();
+      await listenEndpont(req, res, _body);
+    });
+}
+const server = createServer(requestListener);
 
-app.listen(PORT, () => {
-  console.log(`⚡️[server]: Server is running at http://localhost:${PORT}`);
+server.listen(PORT, () => {
+  console.log(`Server is running on port ${PORT}`);
 });
