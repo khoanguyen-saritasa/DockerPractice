@@ -3,7 +3,7 @@ import express, { Express } from "express";
 import { buildAuthorizationAPI } from "./src/apis/authorization";
 import { buildUserAPI } from "./src/apis/user";
 import { PORT } from "./src/configs/configs";
-import { client, connectToDB } from "./src/db/db-config";
+import { client } from "./src/db/db-config";
 
 // Config env.
 dotenv.config();
@@ -11,7 +11,7 @@ dotenv.config();
 const app: Express = express();
 
 // Connect to pg client.
-connectToDB();
+client.connect();
 
 // Body parser.
 app.use(express.json());
@@ -25,8 +25,7 @@ app.use((_, res, next) => {
   next();
 });
 
-
-/** Build APIs. */
+// Build APIs.
 buildAuthorizationAPI(app);
 buildUserAPI(app);
 

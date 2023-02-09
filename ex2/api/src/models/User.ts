@@ -3,7 +3,7 @@ import { UserDto } from "../dtos/user.dto";
 import { ILogin } from "../interfaces/login";
 import { IUser } from "../interfaces/user";
 import { userMapper } from "../mappers/user.mapper";
-import { ResponseError, ResponseErrorType } from "./ResponseError";
+import { generateError, ResponseErrorType } from "../utils/generate-error";
 
 export class User implements IUser {
   public readonly email: IUser["email"];
@@ -60,16 +60,16 @@ export class User implements IUser {
   }
 
   public static composeUnauthorizedError(): ResponseErrorType {
-    return new ResponseError({
+    return generateError({
       non_field_error: "Unauthorized",
       detail: "Unauthorized",
-    }).compose();
+    });
   }
 
   public static composeInvalidUserError(): ResponseErrorType {
-    return new ResponseError({
+    return generateError({
       non_field_error: "Email or password is incorrect",
       detail: "Unauthorized",
-    }).compose();
+    });
   }
 }

@@ -3,8 +3,8 @@ import jwt from "jsonwebtoken";
 import { SECRET_TOKEN } from "../configs/configs";
 import { ILogin } from "../interfaces/login";
 import { IToken } from "../interfaces/token";
-import { ResponseErrorType } from "../models/ResponseError";
 import { User } from "../models/User";
+import { ResponseErrorType } from "../utils/generate-error";
 
 export function buildAuthorizationAPI(app: Express): void {
   app.post<User, IToken | ResponseErrorType, ILogin>(

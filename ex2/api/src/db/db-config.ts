@@ -10,13 +10,3 @@ export const client = new Client({
   password: process.env.DB_PASSWORD,
   port: Number(process.env.DB_PORT),
 });
-
-export const connectToDB = async () => {
-  try {
-    client.connect().then(() => {
-      console.log('Connected to db!')
-    });
-  } catch (err) {
-    console.log(err);
-  }
-};

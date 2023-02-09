@@ -2,8 +2,8 @@ import { Express } from "express";
 import jwt from "jsonwebtoken";
 import { SECRET_TOKEN } from "../configs/configs";
 import { verifyToken } from "../middlewares/authorization";
-import { ResponseErrorType } from "../models/ResponseError";
 import { User } from "../models/User";
+import { ResponseErrorType } from "../utils/generate-error";
 import { ParamDictionary } from "../utils/types";
 
 export function buildUserAPI(app: Express): void {
