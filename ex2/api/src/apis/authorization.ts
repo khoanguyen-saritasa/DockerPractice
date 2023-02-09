@@ -11,7 +11,7 @@ export function buildAuthorizationAPI(app: Express): void {
     "/auth/login/",
     async (req, res) => {
       if (req.body == null) {
-        return res.sendStatus(400).send(User.composeUnauthorizedError());
+        return res.sendStatus(400).send(User.badRequest());
       }
       const userInfo = await User.findUserWithLogin(req.body);
       if (userInfo == null) {

@@ -12,8 +12,8 @@ services:
       - POSTGRES_PASSWORD=abc123
       - POSTGRES_DB=postgres
     volumes: 
+      - db:/var/lib/postgresql/data
       - ./db/init.sql:/docker-entrypoint-initdb.d/init.sql
-      # - db:/var/lib/postgresql/data
 
   api:
     environment:
@@ -41,6 +41,6 @@ services:
       - 3000:3000
     restart: unless-stopped
 
-# volumes:
-#   db:
-#     driver: local
+volumes:
+  db:
+    driver: local

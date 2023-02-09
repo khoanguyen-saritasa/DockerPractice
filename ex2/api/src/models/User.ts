@@ -72,4 +72,10 @@ export class User implements IUser {
       detail: "Unauthorized",
     });
   }
+
+  public static badRequest(): ResponseErrorType {
+    return generateError({
+      detail: "Please double check your post data.",
+    });
+  }
 }
