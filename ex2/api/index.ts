@@ -9,6 +9,7 @@ import { generateError } from "./src/utils/generate-error";
 
 // Config env.
 dotenv.config();
+
 client.connect();
 
 async function listenEndpont(
@@ -40,10 +41,17 @@ async function listenEndpont(
 async function requestListener(req: IncomingMessage, res: ServerResponse) {
   res.setHeader("Content-Type", "application/json");
   res.setHeader("Access-Control-Allow-Origin", "*");
-  res.setHeader("Access-Control-Allow-Methods", "GET, POST, PUT, DELETE");
+  res.setHeader(
+    "Access-Control-Allow-Methods",
+    "OPTIONS, GET, POST, PUT, DELETE"
+  );
   res.setHeader("Access-Control-Allow-Headers", "Content-Type, Authorization");
-
-  const body: Uint8Array[] = [];
+  if (req.method === "OPTIONS") {
+    res.writeHead(200);
+    res.end();
+    return;
+  }
+  let body: Uint8Array[] = [];
   req
     .on("error", (err) => {
       console.error(err);
@@ -56,7 +64,7 @@ async function requestListener(req: IncomingMessage, res: ServerResponse) {
       await listenEndpont(req, res, _body);
     });
 }
-const server = createServer(requestListener);
+const server = createServer(requestListener)
 
 server.listen(PORT, () => {
   console.log(`Server is running on port ${PORT}`);
