@@ -1,12 +1,19 @@
 /** User DTO. */
 export interface UserDto {
 
-  /** Id. */
-  readonly id: number;
+  /** User profile. */
+  readonly userProfile: {
 
-  /** Name. */
-  readonly name: string;
+    /** Id. */
+    readonly id: number;
 
-  /** Email. */
-  readonly email: string;
+    /** First name. */
+    readonly firstname: string;
+
+    /** Last name. */
+    readonly lastname: string;
+
+    /** Email. */
+    readonly email: string;
+  };
 }

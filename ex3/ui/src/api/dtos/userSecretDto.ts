@@ -1,6 +1,10 @@
 /** User secret dto. */
 export interface UserSecretDto {
 
-  /** Access token. */
-  readonly token: string;
+  /** Authentication information. */
+  readonly authenticate: {
+
+    /** Access token. */
+    readonly jwtToken: string;
+  };
 }

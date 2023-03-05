@@ -9,9 +9,9 @@ class UserMapper implements IMapperFromDto<UserDto, User> {
   /** @inheritdoc */
   public fromDto(dto: UserDto): User {
     return new User({
-      id: dto.id,
-      name: dto.name,
-      email: dto.email,
+      id: dto.userProfile.id,
+      name: `${dto.userProfile.lastname} ${dto.userProfile.firstname}`,
+      email: dto.userProfile.email,
     });
   }
 }

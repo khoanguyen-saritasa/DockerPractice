@@ -1,22 +1,35 @@
 import { User } from 'src/models/user';
+import { composeQuery } from 'src/utils/composeQuery';
 
+import { ResponseDto } from '../dtos/responseDto';
 import { UserDto } from '../dtos/userDto';
+import { http } from '../http';
+import { responseMapper } from '../mappers/responseMapper';
 import { userMapper } from '../mappers/userMapper';
 
-// TODO (template preparation): This service was made for template. Remove it from your project.
-export namespace UserApi {
+/** User queries. */
+namespace UserQueries {
 
-  /** Get mock user. */
-  function getMockUser(): Promise<UserDto> {
-    return new Promise(resolve => {
-      const userDto: UserDto = { email: 'mockemail@gg.com', id: 1, name: 'Mock User' };
-      resolve(userDto);
-   });
+  /** User profile query. */
+  export function queryUserProfile() {
+    return `
+      query {
+        userProfile {
+          id
+          email
+          firstname
+          lastname
+        }
+      }
+    `;
   }
+}
+
+export namespace UserApi {
 
   /** Get current user. */
   export async function getCurrentUser(): Promise<User> {
-    const userDto = await getMockUser();
-    return userMapper.fromDto(userDto);
+    const result = await http.post<ResponseDto<UserDto>>('', composeQuery(UserQueries.queryUserProfile()));
+    return responseMapper.fromDto(result.data, userMapper);
   }
 }
