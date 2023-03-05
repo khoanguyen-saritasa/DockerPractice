@@ -1,0 +1,40 @@
+version: "3"
+
+services:
+  api:
+    image: graphile/postgraphile
+    ports:
+      - 5433:5433
+    env_file:
+      - ./.env
+    command: >-
+      --connection ${DATABASE_URL}
+      --port 5433
+      --schema public
+      --enhance-graphiql
+      --jwt-token-identifier public.jwt_token
+      --jwt-secret TOP_SECRET
+      --cors
+      --retry-on-init-fail
+      --watch
+    depends_on:
+      - postgres
+
+  postgres:
+    image: postgres:bullseye
+    volumes:
+      - ./db/init-migration.sql:/docker-entrypoint-initdb.d/init-migration.sql
+      - vocabulary-db-data:/var/lib/postgresql/data
+    environment:
+      POSTGRES_PASSWORD: secret
+      POSTGRES_DB: vocabulary
+    ports:
+       - 5432:5432
+
+  #ui:
+  #  build: ./ui
+  #  ports:
+  #     - 80:80
+
+volumes:
+  vocabulary-db-data:
