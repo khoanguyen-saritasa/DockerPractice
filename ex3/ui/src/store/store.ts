@@ -7,6 +7,7 @@ import createSagaMiddleware from 'redux-saga';
 import { authSlice } from './auth/slice';
 import { groupSlide } from './group/slice';
 import { rootSaga } from './rootSaga';
+import { taskSlide } from './task/slice';
 import { userSlice } from './user/slice';
 
 const sagaMiddleware = createSagaMiddleware();
@@ -17,6 +18,7 @@ export const store = configureStore({
     auth: authSlice.reducer,
     user: userSlice.reducer,
     group: groupSlide.reducer,
+    task: taskSlide.reducer,
   },
   middleware: [
     sagaMiddleware,

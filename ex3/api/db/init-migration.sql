@@ -153,9 +153,9 @@ VALUES
   (2, 6),
   (3, 7);
   
-CREATE FUNCTION public.get_tasks_of_group(group_id integer) RETURNS SETOF public.task AS $$
+CREATE FUNCTION public.get_tasks_by_group_id(group_id integer) RETURNS SETOF public.task AS $$
   SELECT task.*
   FROM public.task task
   INNER JOIN public.group_task group_task ON task.id = group_task.task_id
-  WHERE group_task.group_id = get_tasks_of_group.group_id;
+  WHERE group_task.group_id = get_tasks_by_group_id.group_id;
 $$ LANGUAGE SQL STABLE;

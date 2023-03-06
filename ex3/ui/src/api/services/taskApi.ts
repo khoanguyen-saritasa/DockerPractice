@@ -1,3 +1,4 @@
+import { Group } from 'src/models/group';
 import { composeQuery } from 'src/utils/composeQuery';
 
 import { NodesDto } from '../dtos/nodesDto';
@@ -10,10 +11,10 @@ import { nodesMapper } from '../mappers/nodesMapper';
 /** Task queries. */
 namespace TaskQueries {
 
-  /** Get groups query. */
+  /** Get all tasks query. */
   export function getTasks() {
     return `
-    query MyQuery {
+    query {
       allTasks {
         nodes {
           id
@@ -22,6 +23,23 @@ namespace TaskQueries {
       }
     }
   `;
+  }
+
+  /**
+   * Get tasks by group id query.
+   * @param groupId Group id.
+   */
+  export function getTasksByGroupId(groupId: Group['id']) {
+    return `
+      query {
+        getTasksByGroupId(groupId: ${groupId}) {
+          nodes {
+            id
+            name
+          }
+        }
+      }
+    `;
   }
 }
 
@@ -35,6 +53,18 @@ export namespace TaskApi {
       composeQuery(TaskQueries.getTasks()),
     );
     return nodesMapper.fromDto(result.data, groupMapper, 'allTasks');
+  }
+
+  /**
+   * Get groups.
+   * @param groupId Group id.
+   */
+  export async function getTasksByGroupId(groupId: Group['id']): Promise<readonly TaskDto[]> {
+    const result = await http.post<ResponseDto<NodesDto<TaskDto, 'getTasksByGroupId'>>>(
+      '',
+      composeQuery(TaskQueries.getTasksByGroupId(groupId)),
+    );
+    return nodesMapper.fromDto(result.data, groupMapper, 'getTasksByGroupId');
   }
 
 }
