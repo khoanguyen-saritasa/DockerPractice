@@ -5,6 +5,7 @@ import { TypedUseSelectorHook, useDispatch, useSelector } from 'react-redux';
 import createSagaMiddleware from 'redux-saga';
 
 import { authSlice } from './auth/slice';
+import { groupSlide } from './group/slice';
 import { rootSaga } from './rootSaga';
 import { userSlice } from './user/slice';
 
@@ -15,6 +16,7 @@ export const store = configureStore({
   reducer: {
     auth: authSlice.reducer,
     user: userSlice.reducer,
+    group: groupSlide.reducer,
   },
   middleware: [
     sagaMiddleware,
