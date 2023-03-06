@@ -1,10 +1,10 @@
-import { EdgesDto } from '../dtos/edgesDto';
+import { NodesDto } from '../dtos/nodesDto';
 import { ResponseDto } from '../dtos/responseDto';
 
 import { IMapperFromDto } from './mappers';
 
-/** Response mapper. */
-class EdgesMapper {
+/** Nodes mapper. */
+class NodesMapper {
 
   /** @inheritdoc */
   // eslint-disable-next-line @typescript-eslint/no-explicit-any
@@ -12,11 +12,11 @@ class EdgesMapper {
     TDto,
     TModel,
     TQuery extends string,
-    TResponse extends ResponseDto<EdgesDto<TDto, TQuery>>,
+    TResponse extends ResponseDto<NodesDto<TDto, TQuery>>,
     TMapper extends IMapperFromDto<TDto, TModel>,
   >(response: TResponse, mapperSupport: TMapper, edgeName: TQuery): readonly TModel[] {
-    return response.data[edgeName].edges.map(entity => mapperSupport.fromDto(entity.node));
+    return response.data[edgeName].nodes.map(entityDto => mapperSupport.fromDto(entityDto));
   }
 }
 
-export const edgesMapper = new EdgesMapper();
+export const nodesMapper = new NodesMapper();

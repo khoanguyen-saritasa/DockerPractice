@@ -1,5 +1,5 @@
-/** Group. */
-export interface Group {
+/** Task. */
+export interface Task {
 
   /** Id. */
   readonly id: number;

@@ -1,5 +1,5 @@
-/** Group. */
-export interface Group {
+/** Task dto. */
+export interface TaskDto {
 
   /** Id. */
   readonly id: number;
