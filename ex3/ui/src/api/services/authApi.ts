@@ -17,7 +17,7 @@ namespace AuthQueries {
    * Login mutation.
    * @param loginInfo Login info of user.
    */
-  export function mutateAuthentication(loginInfo: Login) {
+  export function authenticate(loginInfo: Login) {
     return `
       mutation
         {
@@ -39,7 +39,7 @@ export namespace AuthApi {
   export async function login(loginData: Login): Promise<UserSecret> {
     const result = await http.post<ResponseDto<UserSecretDto>>(
       '',
-      composeQuery(AuthQueries.mutateAuthentication(loginData)),
+      composeQuery(AuthQueries.authenticate(loginData)),
     );
     return responseMapper.fromDto(result.data, userSecretMapper);
   }

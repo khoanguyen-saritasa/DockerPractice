@@ -11,8 +11,8 @@ class ResponseMapper {
     TDto,
     TModel,
     TResponse extends ResponseDto<TDto>,
-    E extends IMapperFromDto<TDto, TModel>,
-  >(response: TResponse, mapperSupport: E) {
+    TMapper extends IMapperFromDto<TDto, TModel>,
+  >(response: TResponse, mapperSupport: TMapper): TModel {
     return mapperSupport.fromDto(response.data);
   }
 }

@@ -85,3 +85,15 @@ WHERE
   id = current_user_id();
 
 $$ language SQL stable;
+
+CREATE TABLE public."group" (
+  id serial4 NOT NULL,
+  name varchar(255) NOT NULL,
+  CONSTRAINT group_pkey PRIMARY KEY (id)
+);
+
+INSERT INTO public."group" (id, name)
+VALUES 
+  (1, 'Group 1'),
+  (2, 'Group 2'),
+  (3, 'Group 3');

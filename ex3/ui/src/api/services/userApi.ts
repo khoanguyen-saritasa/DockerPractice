@@ -11,7 +11,7 @@ import { userMapper } from '../mappers/userMapper';
 namespace UserQueries {
 
   /** User profile query. */
-  export function queryUserProfile() {
+  export function getUserProfile() {
     return `
       query {
         userProfile {
@@ -29,7 +29,7 @@ export namespace UserApi {
 
   /** Get current user. */
   export async function getCurrentUser(): Promise<User> {
-    const result = await http.post<ResponseDto<UserDto>>('', composeQuery(UserQueries.queryUserProfile()));
+    const result = await http.post<ResponseDto<UserDto>>('', composeQuery(UserQueries.getUserProfile()));
     return responseMapper.fromDto(result.data, userMapper);
   }
 }
