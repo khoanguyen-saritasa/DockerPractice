@@ -22,7 +22,25 @@ function* fetchGroupWorker(): SagaIterator {
   }
 }
 
+/**
+ * Working saga that gets the group by id.
+ * @param action - Get group by id action.
+ */
+function* fetchGroupById(action: ReturnType<typeof GroupActions.getById>): SagaIterator {
+  try {
+    const group: Group = yield call(GroupApi.getGroupById, action.payload);
+    yield put(GroupActions.getByIdSuccess(group));
+  } catch (error: unknown) {
+    if (isApiError(error)) {
+      const appError = AppErrorMapper.fromDto(error);
+      yield put(GroupActions.getByIdFailure(appError));
+    }
+    throw error;
+  }
+}
+
 /** Watcher saga for user. */
 export function* groupSaga(): SagaIterator {
   yield takeLatest(GroupActions.get.type, fetchGroupWorker);
+  yield takeLatest(GroupActions.getById.type, fetchGroupById);
 }

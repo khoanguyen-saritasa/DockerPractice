@@ -10,10 +10,11 @@ class ResponseMapper {
   public fromDto<
     TDto,
     TModel,
-    TResponse extends ResponseDto<TDto>,
+    TQuery extends string,
+    TResponse extends ResponseDto<TQuery, TDto>,
     TMapper extends IMapperFromDto<TDto, TModel>,
-  >(response: TResponse, mapperSupport: TMapper): TModel {
-    return mapperSupport.fromDto(response.data);
+  >(response: TResponse, mapperSupport: TMapper, nodeName: TQuery): TModel {
+    return mapperSupport.fromDto(response.data[nodeName]);
   }
 }
 

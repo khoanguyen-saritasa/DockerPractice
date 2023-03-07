@@ -12,9 +12,13 @@ export interface GroupState {
 
   /** Groups. */
   readonly groups: readonly Group[];
+
+  /** Group by Id. */
+  readonly groupById: Group | null;
 }
 
 export const initialState: GroupState = {
   isLoading: false,
   groups: [],
+  groupById: null,
 };

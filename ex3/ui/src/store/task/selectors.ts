@@ -11,3 +11,8 @@ export const selectTasksIsLoading = createSelector(
   (state: RootState) => state.task.isLoading,
   isLoading => isLoading,
 );
+
+export const selectTasksByGroupId = createSelector(
+  (state: RootState) => state.task.tasksByGroupId,
+  tasksByGroupId => tasksByGroupId,
+);

@@ -12,10 +12,10 @@ class NodesMapper {
     TDto,
     TModel,
     TQuery extends string,
-    TResponse extends ResponseDto<NodesDto<TDto, TQuery>>,
+    TResponse extends ResponseDto<TQuery, NodesDto<TDto>>,
     TMapper extends IMapperFromDto<TDto, TModel>,
-  >(response: TResponse, mapperSupport: TMapper, edgeName: TQuery): readonly TModel[] {
-    return response.data[edgeName].nodes.map(entityDto => mapperSupport.fromDto(entityDto));
+  >(response: TResponse, mapperSupport: TMapper, nodeName: TQuery): readonly TModel[] {
+    return response.data[nodeName].nodes.map(entityDto => mapperSupport.fromDto(entityDto));
   }
 }
 

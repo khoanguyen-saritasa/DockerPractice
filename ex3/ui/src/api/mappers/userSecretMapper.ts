@@ -10,7 +10,7 @@ class UserSecretMapper implements IMapperFromDto<UserSecretDto, UserSecret> {
   /** @inheritdoc */
   public fromDto(dto: UserSecretDto): UserSecret {
     return {
-      token: dto.authenticate.jwtToken,
+      token: dto.jwtToken,
     };
   }
 }

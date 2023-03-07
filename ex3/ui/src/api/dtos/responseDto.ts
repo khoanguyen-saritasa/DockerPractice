@@ -1,6 +1,8 @@
 /** Response dto. */
-export interface ResponseDto<T> {
+export interface ResponseDto<TQuery extends string, T> {
 
   /** Data returned from api. */
-  readonly data: T;
+  readonly data: {
+    readonly [x in TQuery]: T
+  };
 }

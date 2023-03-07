@@ -37,11 +37,11 @@ export namespace AuthApi {
    * @param loginData Login data.
    */
   export async function login(loginData: Login): Promise<UserSecret> {
-    const result = await http.post<ResponseDto<UserSecretDto>>(
+    const result = await http.post<ResponseDto<'authenticate', UserSecretDto>>(
       '',
       composeQuery(AuthQueries.authenticate(loginData)),
     );
-    return responseMapper.fromDto(result.data, userSecretMapper);
+    return responseMapper.fromDto(result.data, userSecretMapper, 'authenticate');
   }
 
   /** Logs the current user out. */

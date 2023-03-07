@@ -29,7 +29,7 @@ export namespace UserApi {
 
   /** Get current user. */
   export async function getCurrentUser(): Promise<User> {
-    const result = await http.post<ResponseDto<UserDto>>('', composeQuery(UserQueries.getUserProfile()));
-    return responseMapper.fromDto(result.data, userMapper);
+    const result = await http.post<ResponseDto<'userProfile', UserDto>>('', composeQuery(UserQueries.getUserProfile()));
+    return responseMapper.fromDto(result.data, userMapper, 'userProfile');
   }
 }
