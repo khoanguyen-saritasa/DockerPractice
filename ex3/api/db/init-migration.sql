@@ -159,3 +159,32 @@ CREATE FUNCTION public.get_tasks_by_group_id(group_id integer) RETURNS SETOF pub
   INNER JOIN public.group_task group_task ON task.id = group_task.task_id
   WHERE group_task.group_id = get_tasks_by_group_id.group_id;
 $$ LANGUAGE SQL STABLE;
+
+
+CREATE TYPE public.updatedTask AS (
+  group_id integer,
+  task_id integer
+);
+
+CREATE FUNCTION public.add_remove_task_from_group(
+  input_task_id INTEGER,
+  input_group_id INTEGER,
+  is_add BOOLEAN
+) RETURNS public.updatedTask AS $$
+DECLARE
+  result public.updatedTask;
+BEGIN
+  IF is_add THEN
+    INSERT INTO public.group_task (group_id, task_id) 
+    VALUES (input_group_id, input_task_id);
+    result.group_id := input_group_id;
+    result.task_id := input_task_id;
+  ELSE
+    DELETE FROM public.group_task 
+    WHERE group_task.group_id = input_group_id AND group_task.task_id = input_task_id;
+    result.group_id := input_group_id;
+    result.task_id := input_task_id;
+  END IF;
+  RETURN result;
+END;
+$$ LANGUAGE plpgsql;
