@@ -23,6 +23,27 @@ export const taskSlide = createSlice({
       state.isLoading = false;
     })
 
+    .addCase(TaskActions.removeFromGroup, state => {
+      state.error = undefined;
+      state.isLoading = true;
+    })
+    .addCase(TaskActions.removeFromGroupSuccess, state => {
+      state.isLoading = false;
+    })
+    .addCase(TaskActions.removeFromGroupFailure, state => {
+      state.isLoading = false;
+    })
+
+    .addCase(TaskActions.addToGroup, state => {
+      state.isLoading = true;
+    })
+    .addCase(TaskActions.addToGroupSuccess, state => {
+      state.isLoading = false;
+    })
+    .addCase(TaskActions.addToGroupFailure, state => {
+      state.isLoading = false;
+    })
+
     .addCase(TaskActions.getByGroupId, state => {
       state.error = undefined;
       state.isLoading = true;

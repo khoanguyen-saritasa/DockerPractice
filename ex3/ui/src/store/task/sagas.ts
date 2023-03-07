@@ -39,8 +39,46 @@ function* fetchTaskByGroupId(action: ReturnType<typeof TaskActions.getByGroupId>
   }
 }
 
+/**
+ * Working saga that add task to group.
+ * @param action - Add task to group action.
+ */
+function* addTaskToGroup(action: ReturnType<typeof TaskActions.addToGroup>): SagaIterator {
+  try {
+    yield call(TaskApi.addTaskToGroup, action.payload);
+    yield put(TaskActions.addToGroupSuccess());
+    yield put(TaskActions.getByGroupId(action.payload.groupId));
+  } catch (error: unknown) {
+    if (isApiError(error)) {
+      const appError = AppErrorMapper.fromDto(error);
+      yield put(TaskActions.addToGroupFailure(appError));
+    }
+    throw error;
+  }
+}
+
+/**
+ * Working saga that remove task from group.
+ * @param action - Remove task from group action.
+ */
+function* removeTaskFromGroup(action: ReturnType<typeof TaskActions.removeFromGroup>): SagaIterator {
+  try {
+    yield call(TaskApi.removeTaskFromGroup, action.payload);
+    yield put(TaskActions.removeFromGroupSuccess());
+    yield put(TaskActions.getByGroupId(action.payload.groupId));
+  } catch (error: unknown) {
+    if (isApiError(error)) {
+      const appError = AppErrorMapper.fromDto(error);
+      yield put(TaskActions.removeFromGroupFailure(appError));
+    }
+    throw error;
+  }
+}
+
 /** Watcher saga for user. */
 export function* taskSaga(): SagaIterator {
   yield takeLatest(TaskActions.get.type, fetchTaskWorker);
   yield takeLatest(TaskActions.getByGroupId.type, fetchTaskByGroupId);
+  yield takeLatest(TaskActions.removeFromGroup.type, removeTaskFromGroup);
+  yield takeLatest(TaskActions.addToGroup.type, addTaskToGroup);
 }

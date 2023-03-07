@@ -160,11 +160,12 @@ CREATE FUNCTION public.get_tasks_by_group_id(group_id integer) RETURNS SETOF pub
   WHERE group_task.group_id = get_tasks_by_group_id.group_id;
 $$ LANGUAGE SQL STABLE;
 
-
 CREATE TYPE public.updatedTask AS (
   group_id integer,
   task_id integer
 );
+
+GRANT ALL ON public.group_task TO vocabulary_admin;
 
 CREATE FUNCTION public.add_remove_task_from_group(
   input_task_id INTEGER,
@@ -188,3 +189,44 @@ BEGIN
   RETURN result;
 END;
 $$ LANGUAGE plpgsql;
+
+CREATE TABLE public.vocabulary (
+  id SERIAL4 PRIMARY KEY,
+  english VARCHAR(255) NOT NULL,
+  vietnamese VARCHAR(255) NOT NULL,
+  russian VARCHAR(255) NOT NULL
+);
+
+INSERT INTO public.vocabulary (id, english, vietnamese, russian)
+VALUES
+  (1, 'apple', 'quả táo', 'яблоко'),
+  (2, 'banana', 'quả chuối', 'банан'),
+  (3, 'orange', 'quả cam', 'апельсин'),
+  (4, 'grape', 'quả nho', 'виноград'),
+  (5, 'watermelon', 'dưa hấu', 'арбуз'),
+  (6, 'pineapple', 'thơm', 'ананас'),
+  (7, 'mango', 'xoài', 'манго'),
+  (8, 'peach', 'đào', 'персик'),
+  (9, 'pear', 'lê', 'груша'),
+  (10, 'strawberry', 'dâu tây', 'клубника');
+
+CREATE TABLE public.task_vocabulary (
+  task_id INTEGER NOT NULL,
+  vocabulary_id INTEGER NOT NULL,
+  CONSTRAINT task_vocabulary_pkey PRIMARY KEY (task_id, vocabulary_id),
+  CONSTRAINT task_vocabulary_task_id_fkey FOREIGN KEY (task_id) REFERENCES public.task (id) ON DELETE CASCADE,
+  CONSTRAINT task_vocabulary_vocabulary_id_fkey FOREIGN KEY (vocabulary_id) REFERENCES public.vocabulary (id) ON DELETE CASCADE
+);
+
+INSERT INTO public.task_vocabulary (task_id, vocabulary_id)
+VALUES 
+  (1, 1), (1, 6),
+  (2, 2), (2, 9),
+  (3, 3), (3, 5),
+  (4, 4), (4, 7),
+  (5, 5), (5, 8),
+  (6, 6), (6, 10),
+  (7, 7), (7, 1),
+  (8, 8), (8, 2),
+  (9, 9), (9, 3),
+  (10, 10), (10, 4);

@@ -51,7 +51,7 @@ namespace TaskQueries {
    */
   export function addOrRemoveTaskFromGroup(taskId: Task['id'], groupId: Group['id'], isAdd: boolean) {
     return `
-      mutation MyMutation {
+      mutation {
         addRemoveTaskFromGroup(input: {inputTaskId: ${taskId} , isAdd: ${isAdd}, inputGroupId: ${groupId}}) {
           updatedtask {
             groupId
@@ -65,6 +65,16 @@ namespace TaskQueries {
 
 /** Task API. */
 export namespace TaskApi {
+
+  /** Remove or add task from group input. */
+  export interface RemoveOrAddTaskFromGroupInput {
+
+    /** Task ID. */
+    readonly taskId: Task['id'];
+
+    /** Group ID. */
+    readonly groupId: Group['id'];
+  }
 
   /** Get groups. */
   export async function getTasks(): Promise<readonly TaskDto[]> {
@@ -87,4 +97,21 @@ export namespace TaskApi {
     return nodesMapper.fromDto(result.data, groupMapper, 'getTasksByGroupId');
   }
 
+  /**
+   * Add task to group.
+   * @param taskId Task id.
+   * @param groupId Group id.
+   * @param data Task that need to be added from a group.
+   */
+  export async function addTaskToGroup({ taskId, groupId }: RemoveOrAddTaskFromGroupInput): Promise<void> {
+    await http.post('', composeQuery(TaskQueries.addOrRemoveTaskFromGroup(taskId, groupId, true)));
+  }
+
+  /**
+   * Remove task from group.
+   * @param data Task that need to be removed from a group.
+   */
+  export async function removeTaskFromGroup({ taskId, groupId }: RemoveOrAddTaskFromGroupInput): Promise<void> {
+    await http.post('', composeQuery(TaskQueries.addOrRemoveTaskFromGroup(taskId, groupId, false)));
+  }
 }
