@@ -99,8 +99,6 @@ export namespace TaskApi {
 
   /**
    * Add task to group.
-   * @param taskId Task id.
-   * @param groupId Group id.
    * @param data Task that need to be added from a group.
    */
   export async function addTaskToGroup({ taskId, groupId }: RemoveOrAddTaskFromGroupInput): Promise<void> {
