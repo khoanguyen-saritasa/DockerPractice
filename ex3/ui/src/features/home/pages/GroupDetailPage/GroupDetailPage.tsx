@@ -11,7 +11,7 @@ import { selectTasks, selectTasksByGroupId } from 'src/store/task/selectors';
 
 import { TaskDetail } from './components/TaskDetail';
 
-import { TaskView } from './components/TaskView';
+import { TaskItem } from './components/TaskItem';
 
 export const GroupDetailPage: FC = () => {
   const params = useParams<{ groupId: string; }>();
@@ -50,7 +50,7 @@ export const GroupDetailPage: FC = () => {
       <Grid container gap={2}>
         {tasks.map(task => (
           <Grid item key={task.id}>
-            <TaskView isTaskAssigned={isTaskAssigned(task)} onTaskClick={handleTaskClick} task={task}/>
+            <TaskItem isTaskAssigned={isTaskAssigned(task)} onTaskClick={handleTaskClick} task={task}/>
           </Grid>
         ))}
       </Grid>

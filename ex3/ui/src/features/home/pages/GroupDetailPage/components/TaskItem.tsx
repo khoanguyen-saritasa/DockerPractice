@@ -16,7 +16,7 @@ interface Props {
   readonly onTaskClick: (task: Task) => void;
 }
 
-export const TaskView: FC<Props> = ({ task, isTaskAssigned, onTaskClick }) => {
+export const TaskItem: FC<Props> = ({ task, isTaskAssigned, onTaskClick }) => {
   const [anchorEl, setAnchorEl] = useState<null | HTMLElement>(null);
   const [, setSearchParams] = useSearchParams();
   const isOpen = Boolean(anchorEl);
