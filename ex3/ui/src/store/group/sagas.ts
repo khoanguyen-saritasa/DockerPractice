@@ -39,7 +39,7 @@ function* fetchGroupById(action: ReturnType<typeof GroupActions.getById>): SagaI
   }
 }
 
-/** Watcher saga for user. */
+/** Watcher saga for group. */
 export function* groupSaga(): SagaIterator {
   yield takeLatest(GroupActions.get.type, fetchGroupWorker);
   yield takeLatest(GroupActions.getById.type, fetchGroupById);

@@ -9,6 +9,7 @@ import { groupSlide } from './group/slice';
 import { rootSaga } from './rootSaga';
 import { taskSlide } from './task/slice';
 import { userSlice } from './user/slice';
+import { vocabularySlide } from './vocabulary/slice';
 
 const sagaMiddleware = createSagaMiddleware();
 const immutableStateInvariantMiddleware = createImmutableStateInvariantMiddleware();
@@ -19,6 +20,7 @@ export const store = configureStore({
     user: userSlice.reducer,
     group: groupSlide.reducer,
     task: taskSlide.reducer,
+    vocabulary: vocabularySlide.reducer,
   },
   middleware: [
     sagaMiddleware,

@@ -12,8 +12,8 @@ export namespace TaskActions {
   export const getFailure = composeAction<AppError>('getFailure');
 
   export const getByGroupId = composeAction<Group['id']>('getByGroupId');
-  export const getByGroupIdSuccess = composeAction<readonly Task[]>('getGroupByIdSuccess');
-  export const getByGroupIdFailure = composeAction<AppError>('getGroupByIdFailure');
+  export const getByGroupIdSuccess = composeAction<readonly Task[]>('getByGroupBySuccess');
+  export const getByGroupIdFailure = composeAction<AppError>('getByGroupByFailure');
 
   export const removeFromGroup = composeAction<TaskApi.RemoveOrAddTaskFromGroupInput>('removeFromGroup');
   export const removeFromGroupSuccess = composeAction<void>('removeFromGroupSuccess');

@@ -6,8 +6,8 @@ import { NodesDto } from '../dtos/nodesDto';
 import { ResponseDto } from '../dtos/responseDto';
 import { TaskDto } from '../dtos/taskDto';
 import { http } from '../http';
-import { groupMapper } from '../mappers/groupMapper';
 import { nodesMapper } from '../mappers/nodesMapper';
+import { taskMapper } from '../mappers/taskMapper';
 
 /** Task queries. */
 namespace TaskQueries {
@@ -82,7 +82,7 @@ export namespace TaskApi {
       '',
       composeQuery(TaskQueries.getTasks()),
     );
-    return nodesMapper.fromDto(result.data, groupMapper, 'allTasks');
+    return nodesMapper.fromDto(result.data, taskMapper, 'allTasks');
   }
 
   /**
@@ -94,7 +94,7 @@ export namespace TaskApi {
       '',
       composeQuery(TaskQueries.getTasksByGroupId(groupId)),
     );
-    return nodesMapper.fromDto(result.data, groupMapper, 'getTasksByGroupId');
+    return nodesMapper.fromDto(result.data, taskMapper, 'getTasksByGroupId');
   }
 
   /**

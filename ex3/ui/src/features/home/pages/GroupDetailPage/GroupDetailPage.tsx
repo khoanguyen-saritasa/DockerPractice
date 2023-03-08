@@ -9,6 +9,8 @@ import { selectGroupById } from 'src/store/group/selectors';
 import { TaskActions } from 'src/store/task/dispatchers';
 import { selectTasks, selectTasksByGroupId } from 'src/store/task/selectors';
 
+import { TaskDetail } from './components/TaskDetail';
+
 import { TaskView } from './components/TaskView';
 
 export const GroupDetailPage: FC = () => {
@@ -52,6 +54,7 @@ export const GroupDetailPage: FC = () => {
           </Grid>
         ))}
       </Grid>
+      <TaskDetail/>
     </Stack>
   );
 };

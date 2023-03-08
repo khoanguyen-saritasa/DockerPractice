@@ -1,6 +1,7 @@
 import { CheckCircle, Send } from '@mui/icons-material';
 import { Chip, Menu, MenuItem } from '@mui/material';
 import React, { FC, useState } from 'react';
+import { useSearchParams } from 'react-router-dom';
 import { Task } from 'src/models/task';
 
 interface Props {
@@ -17,6 +18,7 @@ interface Props {
 
 export const TaskView: FC<Props> = ({ task, isTaskAssigned, onTaskClick }) => {
   const [anchorEl, setAnchorEl] = useState<null | HTMLElement>(null);
+  const [, setSearchParams] = useSearchParams();
   const isOpen = Boolean(anchorEl);
   const onMenuClick = (event: React.MouseEvent<HTMLDivElement>) => {
     setAnchorEl(event.currentTarget);
@@ -27,6 +29,11 @@ export const TaskView: FC<Props> = ({ task, isTaskAssigned, onTaskClick }) => {
 
   const handleTaskClick = () => {
     onTaskClick(task);
+    handleCloseMenu();
+  };
+
+  const handleViewDetail = () => {
+    setSearchParams({ taskId: task.id.toString() });
     handleCloseMenu();
   };
 
@@ -53,7 +60,7 @@ export const TaskView: FC<Props> = ({ task, isTaskAssigned, onTaskClick }) => {
         <MenuItem onClick={handleTaskClick}>
           {isTaskAssigned ? 'Retrieve task' : 'Send task'}
         </MenuItem>
-        <MenuItem onClick={handleCloseMenu}>See detail</MenuItem>
+        <MenuItem onClick={handleViewDetail}>See detail</MenuItem>
       </Menu>
     </>
   );

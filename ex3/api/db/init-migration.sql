@@ -230,3 +230,11 @@ VALUES
   (8, 8), (8, 2),
   (9, 9), (9, 3),
   (10, 10), (10, 4);
+
+CREATE FUNCTION public.get_vocabularies_by_task_id(task_id integer) RETURNS TABLE(task_id integer, task_name varchar(255), id integer, english varchar(255), vietnamese varchar(255), russian varchar(255)) AS $$
+  SELECT task.id AS task_id, task.name AS task_name, vocabulary.*
+  FROM public.vocabulary vocabulary
+  INNER JOIN public.task_vocabulary task_vocabulary ON vocabulary.id = task_vocabulary.vocabulary_id
+  INNER JOIN public.task task ON task.id = task_vocabulary.task_id
+  WHERE task_vocabulary.task_id = get_vocabularies_by_task_id.task_id;
+$$ LANGUAGE SQL STABLE;

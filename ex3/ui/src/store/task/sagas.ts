@@ -75,7 +75,7 @@ function* removeTaskFromGroup(action: ReturnType<typeof TaskActions.removeFromGr
   }
 }
 
-/** Watcher saga for user. */
+/** Watcher saga for task. */
 export function* taskSaga(): SagaIterator {
   yield takeLatest(TaskActions.get.type, fetchTaskWorker);
   yield takeLatest(TaskActions.getByGroupId.type, fetchTaskByGroupId);
