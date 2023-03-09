@@ -1,0 +1,20 @@
+{
+  "name": "docker-practice",
+  "version": "1.0.0",
+  "description": "",
+  "main": "index.js",
+  "scripts": {
+    "ex1": "cd ex1 && sudo docker compose up -d",
+    "ex2": "cd ex2 && sudo docker compose up -d"
+  },
+  "repository": {
+    "type": "git",
+    "url": "https://github.com/khoanguyen-saritasa/DockerPractice.git"
+  },
+  "author": "khoanguyen",
+  "license": "ISC",
+  "bugs": {
+    "url": "https://github.com/khoanguyen-saritasa/DockerPractice/issues"
+  },
+  "homepage": "https://github.com/khoanguyen-saritasa/DockerPractice#readme"
+}
