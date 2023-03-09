@@ -16,8 +16,8 @@
     "lint": "eslint \"src/**/*.{ts,tsx}\"",
     "lint:fix": "npm run lint -- --fix",
     "stylelint": "stylelint \"src/**/*.*css\"",
-    "api": "cd ../api/ && sudo docker compose up -d",
-    "reset": "cd ../api/ && sudo docker compose down -v && sudo docker compose up -d"
+    "api": "cd ../ && sudo docker compose up -d",
+    "reset": "cd ../ && sudo docker compose down -v && sudo docker compose up -d"
   },
   "private": true,
   "dependencies": {

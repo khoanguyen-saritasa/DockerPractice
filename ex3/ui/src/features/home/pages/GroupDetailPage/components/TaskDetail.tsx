@@ -23,7 +23,7 @@ export const TaskDetail: FC = () => {
     dispatch(VocabularyActions.getByTaskId(Number(taskId)));
   }, [dispatch, taskId]);
 
-  if (taskId == null) {
+  if (taskId == null || vocabularies.length === 0) {
     return <Typography>Choose task to view its detail</Typography>;
   }
   return (
