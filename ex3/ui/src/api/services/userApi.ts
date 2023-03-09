@@ -20,6 +20,7 @@ namespace UserQueries {
           firstname
           lastname
           isAdmin
+
         }
       }
     `;

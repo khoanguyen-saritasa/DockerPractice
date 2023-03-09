@@ -12,6 +12,7 @@ class UserSecretMapper implements IMapperFromDto<UserSecretDto, UserSecret> {
     return {
       token: dto.jwtToken,
     };
+
   }
 }
 
