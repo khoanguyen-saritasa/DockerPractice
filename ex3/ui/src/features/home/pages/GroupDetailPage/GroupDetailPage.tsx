@@ -44,6 +44,11 @@ export const GroupDetailPage: FC = () => {
     }
     dispatch(TaskActions.addToGroup({ taskId: task.id, groupId: Number(params.groupId) }));
   };
+
+  if (group == null) {
+    return <Typography>Please choose an group to assign homework.</Typography>;
+  }
+
   return (
     <Stack gap={3}>
       <Typography variant="h2">{group?.name}</Typography>
