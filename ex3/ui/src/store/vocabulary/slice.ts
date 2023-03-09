@@ -1,8 +1,7 @@
 import { createSlice } from '@reduxjs/toolkit';
-import { Vocabulary } from 'src/models/vocabulary';
+import { createDraft } from 'immer';
 
 import { VocabularyActions } from './dispatchers';
-
 import { initialState } from './state';
 
 export const vocabularySlide = createSlice({
@@ -15,7 +14,7 @@ export const vocabularySlide = createSlice({
       state.isLoading = true;
     })
     .addCase(VocabularyActions.getByTaskIdSuccess, (state, action) => {
-      state.vocabulariesByTaskId = action.payload as Vocabulary[];
+      state.vocabulariesByTaskId = createDraft(action.payload);
       state.isLoading = false;
     })
     .addCase(VocabularyActions.getByTaskIdFailure, (state, action) => {

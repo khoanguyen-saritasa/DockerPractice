@@ -11,9 +11,7 @@ class ResponseMapper {
     TDto,
     TModel,
     TQuery extends string,
-    TResponse extends ResponseDto<TQuery, TDto>,
-    TMapper extends IMapperFromDto<TDto, TModel>,
-  >(response: TResponse, mapperSupport: TMapper, nodeName: TQuery): TModel {
+  >(response: ResponseDto<TQuery, TDto>, mapperSupport: IMapperFromDto<TDto, TModel>, nodeName: TQuery): TModel {
     return mapperSupport.fromDto(response.data[nodeName]);
   }
 }

@@ -11,6 +11,7 @@ class GroupMapper implements IMapperFromDto<GroupDto, Group> {
     return {
       id: dto.id,
       name: dto.name,
+      tasks: dto.groupTasksByGroupId ? dto.groupTasksByGroupId.nodes.map(task => task.taskByTaskId) : [],
     };
   }
 }

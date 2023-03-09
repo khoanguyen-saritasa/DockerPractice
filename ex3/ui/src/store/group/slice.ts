@@ -1,5 +1,5 @@
 import { createSlice } from '@reduxjs/toolkit';
-import { Group } from 'src/models/group';
+import { createDraft } from 'immer';
 
 import { GroupActions } from './dispatchers';
 
@@ -15,7 +15,7 @@ export const groupSlide = createSlice({
       state.isLoading = true;
     })
     .addCase(GroupActions.getSuccess, (state, action) => {
-      state.groups = action.payload as Group[];
+      state.groups = createDraft(action.payload);
       state.isLoading = false;
     })
     .addCase(GroupActions.getFailure, (state, action) => {
@@ -28,7 +28,7 @@ export const groupSlide = createSlice({
       state.isLoading = true;
     })
     .addCase(GroupActions.getByIdSuccess, (state, action) => {
-      state.groupById = action.payload;
+      state.groupById = createDraft(action.payload);
       state.isLoading = false;
     })
     .addCase(GroupActions.getByIdFailure, (state, action) => {

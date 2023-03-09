@@ -77,7 +77,7 @@ export namespace TaskApi {
   }
 
   /** Get groups. */
-  export async function getTasks(): Promise<readonly TaskDto[]> {
+  export async function getTasks(): Promise<readonly Task[]> {
     const result = await http.post<ResponseDto<'allTasks', NodesDto<TaskDto>>>(
       '',
       composeQuery(TaskQueries.getTasks()),
@@ -89,7 +89,7 @@ export namespace TaskApi {
    * Get groups.
    * @param groupId Group id.
    */
-  export async function getTasksByGroupId(groupId: Group['id']): Promise<readonly TaskDto[]> {
+  export async function getTasksByGroupId(groupId: Group['id']): Promise<readonly Task[]> {
     const result = await http.post<ResponseDto<'getTasksByGroupId', NodesDto<TaskDto>>>(
       '',
       composeQuery(TaskQueries.getTasksByGroupId(groupId)),

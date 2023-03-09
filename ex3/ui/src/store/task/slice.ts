@@ -1,5 +1,5 @@
 import { createSlice } from '@reduxjs/toolkit';
-import { Task } from 'src/models/task';
+import { createDraft } from 'immer';
 
 import { TaskActions } from './dispatchers';
 import { initialState } from './state';
@@ -14,7 +14,7 @@ export const taskSlide = createSlice({
       state.isLoading = true;
     })
     .addCase(TaskActions.getSuccess, (state, action) => {
-      state.tasks = action.payload as Task[];
+      state.tasks = createDraft(action.payload);
       state.isLoading = false;
     })
     .addCase(TaskActions.getFailure, (state, action) => {
@@ -49,7 +49,7 @@ export const taskSlide = createSlice({
       state.isLoading = true;
     })
     .addCase(TaskActions.getByGroupIdSuccess, (state, action) => {
-      state.tasksByGroupId = action.payload as Task[];
+      state.tasksByGroupId = createDraft(action.payload);
       state.isLoading = false;
     })
     .addCase(TaskActions.getByGroupIdFailure, (state, action) => {

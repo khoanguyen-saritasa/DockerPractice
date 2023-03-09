@@ -238,3 +238,12 @@ CREATE FUNCTION public.get_vocabularies_by_task_id(task_id integer) RETURNS TABL
   INNER JOIN public.task task ON task.id = task_vocabulary.task_id
   WHERE task_vocabulary.task_id = get_vocabularies_by_task_id.task_id;
 $$ LANGUAGE SQL STABLE;
+
+
+CREATE FUNCTION public.get_group_by_user_id(user_id integer) RETURNS public."group" AS $$
+  SELECT "group".*
+  FROM public."group" "group"
+  INNER JOIN public.group_user gu ON gu.group_id = "group".id
+  WHERE gu.user_id = get_group_by_user_id.user_id
+  LIMIT 1;
+$$ LANGUAGE SQL STABLE;

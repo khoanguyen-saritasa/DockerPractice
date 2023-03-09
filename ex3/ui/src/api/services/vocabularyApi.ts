@@ -1,4 +1,5 @@
 import { Task } from 'src/models/task';
+import { Vocabulary } from 'src/models/vocabulary';
 import { composeQuery } from 'src/utils/composeQuery';
 
 import { NodesDto } from '../dtos/nodesDto';
@@ -41,7 +42,7 @@ export namespace VocabularyApi {
    * Get groups.
    * @param taskId Task id.
    */
-  export async function getVocabulariesByTaskId(taskId: Task['id']): Promise<readonly VocabularyDto[]> {
+  export async function getVocabulariesByTaskId(taskId: Task['id']): Promise<readonly Vocabulary[]> {
     const result = await http.post<ResponseDto<'getVocabulariesByTaskId', NodesDto<VocabularyDto>>>(
       '',
       composeQuery(VocabularyQueries.getVocabulariesByTaskId(taskId)),

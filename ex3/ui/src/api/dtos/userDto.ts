@@ -12,4 +12,7 @@ export interface UserDto {
 
   /** Email. */
   readonly email: string;
+
+  /** Whether user is admin or not. */
+  readonly isAdmin: boolean;
 }

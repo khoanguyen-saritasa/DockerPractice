@@ -1,4 +1,5 @@
 import { Group } from 'src/models/group';
+import { User } from 'src/models/user';
 import { composeQuery } from 'src/utils/composeQuery';
 
 import { GroupDto } from '../dtos/groupDto';
@@ -40,13 +41,33 @@ namespace GroupQueries {
       }
     `;
   }
+
+  /**
+   * Get group by user id.
+   * @param userId  User id.
+   */
+  export function getGroupByUserId(userId: User['id']) {
+    return `
+    getGroupByUserId(userId: ${userId}) {
+      id
+      name
+      groupTasksByGroupId {
+        nodes {
+          taskByTaskId {
+            id
+            name
+          }
+        }
+      }
+    }`;
+  }
 }
 
 /** Group API. */
 export namespace GroupApi {
 
   /** Get groups. */
-  export async function getGroups(): Promise<readonly GroupDto[]> {
+  export async function getGroups(): Promise<readonly Group[]> {
     const result = await http.post<ResponseDto<'allGroups', NodesDto<GroupDto>>>(
       '',
       composeQuery(GroupQueries.getGroups()),

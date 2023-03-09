@@ -19,6 +19,7 @@ namespace UserQueries {
           email
           firstname
           lastname
+          isAdmin
         }
       }
     `;

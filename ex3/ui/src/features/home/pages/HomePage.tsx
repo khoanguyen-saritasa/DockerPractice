@@ -1,14 +1,22 @@
-import { Stack } from '@mui/system';
 import { FC, memo } from 'react';
+import { useAppSelector } from 'src/store';
+import { selectUser } from 'src/store/user/selectors';
 
-import { AsideMenu } from '../components/AsideMenu';
-import { Main } from '../components/Main';
+import { AdminLayout } from '../components/AdminLayout';
+import { UserLayout } from '../components/UserLayout';
 
-const HomePageComponent: FC = () => (
-  <Stack direction="row" gap="10px">
-    <AsideMenu />
-    <Main/>
-  </Stack>
-);
+const HomePageComponent: FC = () => {
+  const currentUser = useAppSelector(selectUser);
+
+  if (currentUser == null) {
+    return <></>;
+  }
+
+  if (currentUser.isAdmin) {
+    return <AdminLayout />;
+  }
+
+  return <UserLayout />;
+};
 
 export const HomePage = memo(HomePageComponent);
