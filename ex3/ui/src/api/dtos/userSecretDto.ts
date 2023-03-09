@@ -2,5 +2,6 @@
 export interface UserSecretDto {
 
   /** Access token. */
-  readonly token: string;
+  readonly jwtToken: string;
+
 }

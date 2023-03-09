@@ -1,16 +1,16 @@
-import { Suspense, FC } from 'react';
+import { ThemeProvider } from '@emotion/react';
+import { Box } from '@mui/material';
+import { FC, Suspense } from 'react';
 import { Provider } from 'react-redux';
 import { BrowserRouter } from 'react-router-dom';
-import { Box, Container } from '@mui/material';
-import { ThemeProvider } from '@emotion/react';
 
 import { AppHeader } from './components/AppHeader';
 import { AppLoadingSpinner } from './components/AppLoadingSpinner';
 import { RestoreUserWrapper } from './components/RestoreUserWrapper';
 import { RootRouter } from './routes/RootRouter';
 import { store } from './store';
-import { muiTheme } from './theme/muiTheme';
 import './theme';
+import { muiTheme } from './theme/muiTheme';
 
 export const App: FC = () => (
   <Provider store={store}>
@@ -18,18 +18,16 @@ export const App: FC = () => (
       <BrowserRouter>
         <Box
           sx={{
-              display: 'flex',
-              flexDirection: 'column',
-              minHeight: '100vh',
+            display: 'flex',
+            flexDirection: 'column',
+            minHeight: '100vh',
           }}
         >
           <AppHeader />
           <RestoreUserWrapper>
-            <Container component="main" sx={{ padding: 2, flexGrow: 1 }}>
-              <Suspense fallback={<AppLoadingSpinner />}>
-                <RootRouter />
-              </Suspense>
-            </Container>
+            <Suspense fallback={<AppLoadingSpinner />}>
+              <RootRouter />
+            </Suspense>
           </RestoreUserWrapper>
           {/* App Footer. */}
         </Box>

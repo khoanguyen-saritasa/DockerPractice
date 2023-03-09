@@ -53,9 +53,8 @@ const AppHeaderComponent: FC = () => {
           underline="none"
           noWrap
         >
-          React Boilerplate
+          Exercise 3
         </Link>
-        <div />
         <Box sx={{ flexGrow: 1 }} />
         {rightSection}
       </Toolbar>

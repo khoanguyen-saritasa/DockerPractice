@@ -31,10 +31,15 @@ services:
     ports:
        - 5432:5432
 
-  #ui:
-  #  build: ./ui
-  #  ports:
-  #     - 80:80
+  ui:
+    build: 
+      context: ./ui
+      dockerfile: Dockerfile
+      args:
+        VITE_API_URL: http://localhost:5433/graphql
+    ports:
+      - 3000:80
+    restart: unless-stopped
 
 volumes:
   vocabulary-db-data:

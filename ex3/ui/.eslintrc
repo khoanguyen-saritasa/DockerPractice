@@ -38,7 +38,10 @@
   },
   "overrides": [
     {
-      "files": ["**/*.tsx"],
+      "parserOptions": {
+        "project": "**/tsconfig.json"
+      },
+      "files": ["**/*.tsx", "**/*.ts"],
       "rules": {
         "no-restricted-syntax": [
           "error",
