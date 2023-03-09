@@ -12,6 +12,11 @@ export const selectGroupById = createSelector(
   group => group,
 );
 
+export const selectGroupByUserId = createSelector(
+  (state: RootState) => state.group.groupByUserId,
+  group => group,
+);
+
 export const selectGroupsIsLoading = createSelector(
   (state: RootState) => state.group.isLoading,
   isLoading => isLoading,

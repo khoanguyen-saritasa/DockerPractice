@@ -13,10 +13,13 @@ interface Props {
   readonly isTaskAssigned: boolean;
 
   /** Handle task item clicked. */
-  readonly onTaskClick: (task: Task) => void;
+  readonly onTaskClick?: (task: Task) => void;
+
+  /** Whether menu is showed when clicked task or not. */
+  readonly shouldHideMenu?: boolean;
 }
 
-export const TaskItem: FC<Props> = ({ task, isTaskAssigned, onTaskClick }) => {
+export const TaskItem: FC<Props> = ({ task, isTaskAssigned, shouldHideMenu = false, onTaskClick }) => {
   const [anchorEl, setAnchorEl] = useState<null | HTMLElement>(null);
   const [, setSearchParams] = useSearchParams();
   const isOpen = Boolean(anchorEl);
@@ -28,13 +31,17 @@ export const TaskItem: FC<Props> = ({ task, isTaskAssigned, onTaskClick }) => {
   };
 
   const handleTaskClick = () => {
-    onTaskClick(task);
-    handleCloseMenu();
+    onTaskClick?.(task);
+    if (!shouldHideMenu) {
+      handleCloseMenu();
+    }
   };
 
   const handleViewDetail = () => {
     setSearchParams({ taskId: task.id.toString() });
-    handleCloseMenu();
+    if (!shouldHideMenu) {
+      handleCloseMenu();
+    }
   };
 
   const MENU_ID = `task-menu-${task.id}`;
@@ -48,10 +55,11 @@ export const TaskItem: FC<Props> = ({ task, isTaskAssigned, onTaskClick }) => {
         color={isTaskAssigned ? 'success' : undefined}
         icon={ isTaskAssigned ? <CheckCircle fontSize="small" /> : <Send fontSize="small" /> }
         clickable
-        onClick={onMenuClick}
+        onClick={shouldHideMenu ? handleViewDetail : onMenuClick}
         label={task.name}
       />
       <Menu
+        hidden={shouldHideMenu}
         id={MENU_ID}
         anchorEl={anchorEl}
         open={isOpen}

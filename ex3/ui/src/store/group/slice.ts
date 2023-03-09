@@ -2,7 +2,6 @@ import { createSlice } from '@reduxjs/toolkit';
 import { createDraft } from 'immer';
 
 import { GroupActions } from './dispatchers';
-
 import { initialState } from './state';
 
 export const groupSlide = createSlice({
@@ -33,6 +32,19 @@ export const groupSlide = createSlice({
     })
     .addCase(GroupActions.getByIdFailure, (state, action) => {
       state.groupById = null;
+      state.error = action.payload;
+      state.isLoading = false;
+    })
+
+    .addCase(GroupActions.getByUserId, state => {
+      state.isLoading = true;
+    })
+    .addCase(GroupActions.getByUserIdSuccess, (state, action) => {
+      state.groupByUserId = createDraft(action.payload);
+      state.isLoading = false;
+    })
+    .addCase(GroupActions.getByUserIdFailure, (state, action) => {
+      state.groupByUserId = null;
       state.error = action.payload;
       state.isLoading = false;
     }),

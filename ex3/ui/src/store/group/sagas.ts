@@ -39,8 +39,26 @@ function* fetchGroupById(action: ReturnType<typeof GroupActions.getById>): SagaI
   }
 }
 
+/**
+ * Working saga that gets the group by user id.
+ * @param action - Get group by user id action.
+ */
+function* fetchGroupByUserId(action: ReturnType<typeof GroupActions.getByUserId>): SagaIterator {
+  try {
+    const group: Group = yield call(GroupApi.getGroupByUserId, action.payload);
+    yield put(GroupActions.getByUserIdSuccess(group));
+  } catch (error: unknown) {
+    if (isApiError(error)) {
+      const appError = AppErrorMapper.fromDto(error);
+      yield put(GroupActions.getByUserIdFailure(appError));
+    }
+    throw error;
+  }
+}
+
 /** Watcher saga for group. */
 export function* groupSaga(): SagaIterator {
   yield takeLatest(GroupActions.get.type, fetchGroupWorker);
   yield takeLatest(GroupActions.getById.type, fetchGroupById);
+  yield takeLatest(GroupActions.getByUserId.type, fetchGroupByUserId);
 }

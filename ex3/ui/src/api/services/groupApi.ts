@@ -48,18 +48,21 @@ namespace GroupQueries {
    */
   export function getGroupByUserId(userId: User['id']) {
     return `
-    getGroupByUserId(userId: ${userId}) {
-      id
-      name
-      groupTasksByGroupId {
-        nodes {
-          taskByTaskId {
-            id
-            name
+    query {
+      getGroupByUserId(userId: ${userId}) {
+        id
+        name
+        groupTasksByGroupId {
+          nodes {
+            taskByTaskId {
+              id
+              name
+            }
           }
         }
       }
-    }`;
+    }
+    `;
   }
 }
 
@@ -85,6 +88,18 @@ export namespace GroupApi {
       composeQuery(GroupQueries.getGroupById(groupId)),
     );
     return responseMapper.fromDto(result.data, groupMapper, 'groupById');
+  }
+
+  /**
+   * Get group by user ID.
+   * @param userId User id.
+   */
+  export async function getGroupByUserId(userId: User['id']): Promise<Group> {
+    const result = await http.post<ResponseDto<'getGroupByUserId', GroupDto>>(
+      '',
+      composeQuery(GroupQueries.getGroupByUserId(userId)),
+    );
+    return responseMapper.fromDto(result.data, groupMapper, 'getGroupByUserId');
   }
 
 }

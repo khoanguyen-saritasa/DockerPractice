@@ -12,4 +12,9 @@ export namespace GroupActions {
   export const getById = composeAction<Group['id']>('getGroupById');
   export const getByIdSuccess = composeAction<Group>('getGroupByIdSuccess');
   export const getByIdFailure = composeAction<AppError>('getGroupByIdFailure');
+
+  export const getByUserId = composeAction<Group['id']>('getByUserId');
+  export const getByUserIdSuccess = composeAction<Group>('getGroupByUserIdSuccess');
+  export const getByUserIdFailure = composeAction<AppError>('getGroupByUserIdFailure');
+
 }
