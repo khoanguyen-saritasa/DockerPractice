@@ -1,8 +1,7 @@
 import { Immerable, OmitImmerable } from './immerable';
 
 /** User. */
-export class User extends I
-mmerable {
+export class User extends Immerable {
   /** User id. */
   public readonly id: number;
 
