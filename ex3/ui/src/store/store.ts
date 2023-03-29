@@ -5,9 +5,11 @@ import { TypedUseSelectorHook, useDispatch, useSelector } from 'react-redux';
 import createSagaMiddleware from 'redux-saga';
 
 import { authSlice } from './auth/slice';
-import { postsSlice } from './posts/slice';
+import { groupSlide } from './group/slice';
 import { rootSaga } from './rootSaga';
+import { taskSlide } from './task/slice';
 import { userSlice } from './user/slice';
+import { vocabularySlide } from './vocabulary/slice';
 
 const sagaMiddleware = createSagaMiddleware();
 const immutableStateInvariantMiddleware = createImmutableStateInvariantMiddleware();
@@ -16,7 +18,9 @@ export const store = configureStore({
   reducer: {
     auth: authSlice.reducer,
     user: userSlice.reducer,
-    posts: postsSlice.reducer,
+    group: groupSlide.reducer,
+    task: taskSlide.reducer,
+    vocabulary: vocabularySlide.reducer,
   },
   middleware: [
     sagaMiddleware,

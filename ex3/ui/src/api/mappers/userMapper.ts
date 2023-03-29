@@ -10,8 +10,9 @@ class UserMapper implements IMapperFromDto<UserDto, User> {
   public fromDto(dto: UserDto): User {
     return new User({
       id: dto.id,
-      name: dto.name,
+      name: `${dto.lastname} ${dto.firstname}`,
       email: dto.email,
+      isAdmin: dto.isAdmin,
     });
   }
 }

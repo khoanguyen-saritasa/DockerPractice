@@ -23,3 +23,6 @@ Postgres server is available at `localhost:5432`
 
 GraphQL API is available at `http://localhost:5433/graphql`
 GraphiQL GUI tool is available at `http://localhost:5433/graphiql`
+
+## Starting application
+Run `docker compose up` to see magic setup. Application will start at `http://localhost:3000`

@@ -1,7 +1,7 @@
 import axios, { AxiosInstance } from 'axios';
 
 import { CONFIG } from './config';
-import { addSecretBeforeRequest, refreshSecret } from './interceptors';
+import { addSecretBeforeRequest } from './interceptors';
 
 export const http: AxiosInstance = axios.create({
   baseURL: CONFIG.apiUrl,
@@ -22,5 +22,3 @@ export const http: AxiosInstance = axios.create({
 
 // TODO (template preparation): Add necessary HTTP request interceptors.
 http.interceptors.request.use(addSecretBeforeRequest);
-
-http.interceptors.response.use(config => config, refreshSecret);

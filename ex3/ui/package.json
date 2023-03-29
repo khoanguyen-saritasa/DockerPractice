@@ -15,7 +15,10 @@
     "test": "jest --watch",
     "lint": "eslint \"src/**/*.{ts,tsx}\"",
     "lint:fix": "npm run lint -- --fix",
-    "stylelint": "stylelint \"src/**/*.*css\""
+    "stylelint": "stylelint \"src/**/*.*css\"",
+    "api": "cd ../ && sudo docker compose up -d",
+    "reset": "cd ../ && sudo docker compose down -v && sudo docker compose up --build -d",
+    "up": "sudo docker compose up"
   },
   "private": true,
   "dependencies": {
